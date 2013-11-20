@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+ 
+</head>
+<body>
+  
+</body>
+
+  <script>
+    
+    var processItem = function(item, process, callback){
+      callback(process(item));
+    }
+    
+    var processItems = function(items, process, doneCallback, doneData){
+      var doneData = doneData || [];
+      if(items.length == 0){
+        doneCallback(doneData); 
+      } else {
+        processItem(items.shift(), process, function(data){
+            doneData.push(data);
+            processItems(items, process, doneCallback, doneData);
+        });
+      }
+    }
+    
+    var myProc = function(item){
+      return "Processed " + item;
+    }
+    
+    var doneProc = function(data){
+      console.log(data.join());
+    }
+                    
+    processItems(["larry", "Moe", "Curly"], myProc, doneProc)
+    
+    
+  </script>
+</html>
